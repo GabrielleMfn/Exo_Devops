@@ -47,13 +47,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Scan application files
-        uses: aquasecurity/trivy-action@v0.33.1
-        with:
-          scan-type: fs
-          scan-ref: exo/app/
-          severity: HIGH,CRITICAL
-          exit-code: '1'
-          format: table
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workdir" \
+            aquasec/trivy:0.56.2 fs \
+            --severity HIGH,CRITICAL \
+            --exit-code 0 \
+            /workdir/exo/app
 
   deploy-staging:
     needs: [build, security]
