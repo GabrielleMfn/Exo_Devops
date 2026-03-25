@@ -26,3 +26,9 @@ Pendant l'exercice, j'ai identifié un problème dans le flux multi-stage: une i
 ## Correctifs appliqués
 
 J'ai conservé un Dockerfile de production propre, avec utilisateur non-root et dépendances limitées au runtime. J'ai corrigé le `build.context` vers `../app` pour que la stack continue de fonctionner après réorganisation des dossiers. J'ai ensuite validé le résultat par des tests HTTP (`/` et `/health`) et par la comparaison de taille entre l'image non optimisée et l'image optimisée.
+
+## Note sur l'alerte de vulnérabilités Docker
+
+J'ai observé des alertes de type "high vulnerabilities" sur l'image optimisée. Dans ce contexte, ces alertes viennent majoritairement des paquets système de l'image de base et pas d'une régression fonctionnelle de l'exercice.
+
+Pour un rendu de lab, l'application reste valide et testable. En production, je prévois une mise à jour régulière de l'image de base, un pinning propre des versions et un scan de sécurité continu en CI.
