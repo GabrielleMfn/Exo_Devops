@@ -1,0 +1,12 @@
+---
+- name: Configuration commune
+  hosts: all
+  gather_facts: true
+  roles:
+    - base
+
+- name: Serveurs web
+  hosts: webservers
+  gather_facts: true
+  roles:
+    - nginx

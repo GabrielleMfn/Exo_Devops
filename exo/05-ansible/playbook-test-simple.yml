@@ -1,0 +1,13 @@
+  gather_facts: no
+  tasks:
+    - name: Create test directory
+      ansible.builtin.file:
+        path: /tmp/ansible-managed
+        state: directory
+        mode: '0755'
+
+    - name: Add line to marker file (idempotent)
+      ansible.builtin.file:
+        path: /tmp/ansible-managed/{{ inventory_hostname }}.txt
+        state: touch
+

@@ -1,0 +1,29 @@
+---
+- name: Bootstrap Python in containers
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install Python and base packages
+      raw: apt-get update && apt-get install -y python3 python3-apt curl wget vim htop net-tools
+      changed_when: false
+
+- name: Configuration de base des serveurs
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Créer le répertoire d'application
+      ansible.builtin.file:
+        path: /opt/app
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Copier le fichier de configuration
+      ansible.builtin.copy:
+        content: |
+          APP_ENV=production
+          APP_LOG_LEVEL=info
+          APP_PORT=3000
+        dest: /opt/app/.env
+        mode: '0600'
